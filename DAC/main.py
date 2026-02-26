@@ -1,4 +1,6 @@
-import flet as ft
+import flet as ft  # type: ignore
+from Simulador1 import criaSimulador1
+from Simulador2 import criaSimulador2
 
 def main(page: ft.Page):
     page.title = "Simulador de Juros e Créditos"
@@ -25,35 +27,9 @@ def main(page: ft.Page):
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         )
 
-    def criaSimulador1():
-        return ft.Column(
-            [
-                ft.Text("Simulador 1", size=22, weight=ft.FontWeight.BOLD),
-                ft.Row(
-                    [
-                        ft.OutlinedButton("Início", on_click=lambda _: goToView(0)),  # estados: 0 = início, 1 = turmas, 2 = alunos
-                        ft.OutlinedButton("Simulador 2", on_click=lambda _: goToView(2)),  # estados: 0 = início, 1 = turmas, 2 = alunos
-                    ],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                ),
-            ],
-            expand=True,
-        )
+    criaSimulador1()
 
-    def criaSimulador2():
-        return ft.Column(
-            [
-                ft.Text("Simulador 2", size=22, weight=ft.FontWeight.BOLD),
-                ft.Row(
-                    [
-                        ft.OutlinedButton("Início", on_click=lambda _: goToView(0)),  # estados: 0 = início, 1 = turmas, 2 = alunos
-                        ft.OutlinedButton("Simulador 1", on_click=lambda _: goToView(1)),  # estados: 0 = início, 1 = turmas, 2 = alunos
-                    ],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                ),
-            ],
-            expand=True,
-        )
+    criaSimulador2()
 
     # Função que devolve o corpo da página com base no estado
     def criaCorpoPagina():
@@ -83,8 +59,8 @@ def main(page: ft.Page):
         selected_index=state["screen"],
         destinations=[
             ft.NavigationBarDestination(icon=ft.Icons.HOME, label="Início"),
-            ft.NavigationBarDestination(icon=ft.Icons.SCHOOL, label="Simulador 1"),
-            ft.NavigationBarDestination(icon=ft.Icons.PEOPLE, label="Simulador 2"),
+            ft.NavigationBarDestination(icon=ft.Icons.CURRENCY_EXCHANGE, label="Simulador 1"),
+            ft.NavigationBarDestination(icon=ft.Icons.ACCOUNT_BALANCE_ROUNDED, label="Simulador 2"),
         ],
         on_change=changeView,
         bgcolor=ft.Colors.BLUE_100
@@ -95,28 +71,7 @@ def main(page: ft.Page):
         ft.Column([ ft.AppBar(title=ft.Text("SIMULADOR DE JUROS E CRÉDITOS"), bgcolor=ft.Colors.BLUE_100), corpoPagina, barraNavegacao, ], expand=True, )
     )
     
+    page.update()
     
 ft.run(main, view=ft.AppView.WEB_BROWSER)
 
-
-def calcJuros(capital, taxa, tempo, jurosSimples=True):
-    """
-    capital: valor inicial (float)
-    taxa: taxa de juros em porcentagem (ex: 5 para 5%)
-    tempo: período (anos, meses, etc.)
-    jurosSimplesipo: True - simples ou False - composto
-    """
-
-    taxa_decimal = taxa / 100
-
-    if jurosSimples:
-        juros = capital * taxa_decimal * tempo
-        montante = capital + juros
-    else:
-        montante = capital * (1 + taxa_decimal) ** tempo
-        juros = montante - capital
-
-    return {
-        "juros": round(juros, 2),
-        "montante": round(montante, 2)
-    }
