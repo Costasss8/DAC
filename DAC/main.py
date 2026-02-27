@@ -17,8 +17,8 @@ def main(page: ft.Page):
                 ft.Text("Escolha uma opção abaixo."),
                 ft.Row(
                     [
-                        ft.FilledButton("Simulador 1", on_click=lambda _: goToView(1)),  # estados: 0 = início, 1 = turmas, 2 = alunos
-                        ft.FilledButton("Simulador 2", on_click=lambda _: goToView(2)),  # estados: 0 = início, 1 = turmas, 2 = alunos
+                        ft.FilledButton("Simulador Contas-Poupança", on_click=lambda _: goToView(1)),  # estados: 0 = início, 1 = turmas, 2 = alunos
+                        ft.FilledButton("    Simulador Crédito    ", on_click=lambda _: goToView(2)),  # estados: 0 = início, 1 = turmas, 2 = alunos
                     ],
                     alignment=ft.MainAxisAlignment.CENTER,
                 ),
@@ -74,4 +74,7 @@ def main(page: ft.Page):
     page.update()
     
 ft.run(main, view=ft.AppView.WEB_BROWSER)
+
+
+
 
